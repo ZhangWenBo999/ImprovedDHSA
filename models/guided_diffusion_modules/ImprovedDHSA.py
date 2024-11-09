@@ -67,7 +67,11 @@ class ImprovedDHSA(nn.Module):
         # bins = torch.linspace(x.min(), x.max(), num_bins + 1)
 
         bins = torch.linspace(x.min().item(), x.max().item(), num_bins + 1)
-        indices = torch.bucketize(x, bins) - 1
+
+        print(bins.device)
+        print(x.device)
+        
+        indices = torch.bucketize(x, bins.cuda()) - 1
         return indices, bins
 
     def reshape_attn(self, q, k, v, ifBox):
